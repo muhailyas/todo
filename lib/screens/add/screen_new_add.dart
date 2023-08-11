@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:todo_using_api/api/api_service.dart';
+import 'package:todo_using_api/api/model.dart';
 import 'package:todo_using_api/constants/constants.dart';
 import 'textfieldwidget.dart';
 
@@ -86,8 +88,21 @@ class ScreenNewAdd extends StatelessWidget {
     );
   }
 
-  void validate(BuildContext context) {
+  void validate(BuildContext context) async {
     if (formKey.currentState!.validate()) {
+      final newTodo = Todo(
+          id: '',
+          title: titleController.text,
+          description: descriptionController.text,
+          isCompleted: true,
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now());
+      try {
+        final createdTodo = await TodoApi().createTodo(newTodo);
+        print("Created todo:${createdTodo}");
+      } catch (e) {
+        print(e);
+      }
       formKey.currentState!.reset();
     }
   }
