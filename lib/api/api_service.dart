@@ -6,7 +6,9 @@ class TodoApi {
   static const String baseUrl = 'https://api.nstack.in/v1/todos';
 
   Future<List<Todo>> fetchTodos() async {
-    final response = await http.get(Uri.parse(baseUrl));
+    final response = await http.get(
+      Uri.parse(baseUrl),
+    );
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> responseData = json.decode(response.body);
@@ -20,10 +22,6 @@ class TodoApi {
   Future<Todo> createTodo(Todo todo) async {
     final response = await http.post(
       Uri.parse(baseUrl),
-      headers: {
-        'accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
       body: jsonEncode({
         'title': todo.title,
         'description': todo.description,
@@ -74,10 +72,7 @@ class TodoApi {
     if (response.statusCode == 204) {
       return;
     } else if (response.statusCode == 404) {
-      // print('Todo not found. ID: ${todo.id}');
     } else {
-      // print('Failed to delete todo. Status Code: ${response.statusCode}');
-      // print('Response Body: ${response.body}');
       throw Exception('Failed to delete todo');
     }
   }

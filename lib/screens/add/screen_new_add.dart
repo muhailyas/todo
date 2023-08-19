@@ -91,12 +91,10 @@ class ScreenNewAdd extends StatelessWidget {
   void validate(BuildContext context) async {
     if (formKey.currentState!.validate()) {
       final newTodo = Todo(
-          id: '',
-          title: titleController.text,
-          description: descriptionController.text,
-          isCompleted: true,
-          createdAt: DateTime.now(),
-          updatedAt: DateTime.now());
+        title: titleController.text,
+        description: descriptionController.text,
+        isCompleted: true,
+      );
       try {
         final createdTodo = await TodoApi().createTodo(newTodo);
         print("Created todo:${createdTodo}");
